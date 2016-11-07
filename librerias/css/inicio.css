@@ -1,0 +1,14 @@
+div {
+	border: 2px solid; 
+	border-color: #669CCC;
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 20%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+table {
+	
+}

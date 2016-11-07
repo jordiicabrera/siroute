@@ -1,0 +1,264 @@
+<html lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Solicitud de mensajeria</title>
+		<script type="text/javascript" src="../librerias/jquery-1.8.3.min.js"></script>	
+		<link rel="stylesheet" href="../librerias/jqwidgets/styles/jqx.base.css" type="text/css" />
+    	<link rel="stylesheet" href="../librerias/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+    	<link rel="stylesheet" href="../librerias/jqwidgets/styles/jqx.energyblue.css" type="text/css" />
+    	<link rel="stylesheet" href="../librerias/css/solicitudMensajeria.css" type="text/css" />
+    	<link rel="stylesheet" href="../librerias/sweetalert/dist/sweetalert.css" type="text/css" >
+    	<script type="text/javascript" src="../librerias/jqwidgets/scripts/demos.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxcore.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxbuttons.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxscrollbar.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxlistbox.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxdropdownlist.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxradiobutton.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxdatetimeinput.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxcalendar.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxtooltip.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/globalization//globalize.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxinput.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxscrollbar.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxtextarea.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/jqxvalidator.js"></script>
+	    <script type="text/javascript" src="../librerias/jqwidgets/globalization/globalize.culture.es-ES.js"></script>
+	    <script src="../librerias/sweetalert/dist/sweetalert.min.js"></script>
+
+	    <script type="text/javascript">
+            $(document).ready(function () {  
+
+            	//Creamos el campo de la fecha
+
+            	$("#dtpFecha").jqxDateTimeInput({width:'200',height:'25',theme:'energyblue',culture: 'es-ES'});
+            	$("#dtpFecha").jqxDateTimeInput({ disabled: true });
+            	//Creamos los radio button
+
+                 $("#rbSi").jqxRadioButton({width:120,height:25,theme: 'energyblue'});
+                 $("#rbNo").jqxRadioButton({width:120,height:25,theme: 'energyblue'});
+
+
+                 //Agregamos la funcion de seleccion del evento
+
+                $("#rbSi").bind('change',function(event){
+                 	var checked= event.args.checked;
+                 		$("#dtpFecha").jqxDateTimeInput({ disabled: false });
+                });
+
+                 $("#rbNo").bind('change',function(event){
+                 	var checked= event.args.checked;
+                 	$("#dtpFecha").jqxDateTimeInput({ disabled: true });
+                });
+
+                $("#rbNo").jqxRadioButton({ checked: true });
+
+                var datos = [
+                    "Dentro de la ciudad",
+                    "Fuera de la ciudad"
+		        ];
+                // Create a jqxDropDownList
+                $("#cmbEmpresa").jqxDropDownList({ source: ["Bananeras"], selectedIndex: 0, width: '200', height: '25',theme: 'energyblue'});
+                $("#cmbPerimetro").jqxDropDownList({ source: datos, selectedIndex: 0, width: '200', height: '25',theme: 'energyblue'});
+
+                //Creamos las cajas de texto
+
+                $("#txtRazonSocial").jqxInput({placeHolder: "Ingrese la razon social o empresa", height: 25, width: 200, minLength: 1,  theme:'energyblue'});
+
+
+                $("#txtDireccion").jqxInput({placeHolder: "Ingrese la direccion", height: 25, width: 250, minLength: 1,  theme:'energyblue'});
+
+
+                $("#txtDetalle").jqxTextArea({placeHolder: "Ingrese el detalle", height: 45, width: 255, minLength: 1,  theme:'energyblue'});
+
+                $("#txtContacto").jqxInput({placeHolder: "Ingrese el contacto", height: 25, width: 250, minLength: 1,  theme:'energyblue'});
+
+				$("#txtTelefono").jqxInput({placeHolder: "Ingrese el telefono", height: 25, width: 175, minLength: 1,  theme:'energyblue'});
+
+				$("#txtEmail").jqxInput({placeHolder: "Ingrese el Email", height: 25, width: 250, minLength: 1,  theme:'energyblue'});
+				
+				$("#datos").jqxValidator({ rules: [
+						{input: '#txtEmail',message:'Email invalido',action:'keyup',rule:'email'}],theme:"energyblue"
+				});
+             });
+
+            $(function() {
+                $("#btnAceptar").click(function() {
+
+                	var empresa = $("#cmbEmpresa").val();
+                	var perimetro = $("#cmbPerimetro").val();
+                	var razonSocial = $("#txtRazonSocial").val();
+                	var escogerFecha = $("#rbSi").val();
+                	var fecha;
+           			
+
+           			    
+
+                	if(escogerFecha){
+                		 fecha = $("#dtpFecha").val();
+                		 //alert(fecha);
+                	}else{
+                		fecha = new Date();
+        				fecha.setDate(fecha.getDate()+1);
+        				//alert(fecha.toLocaleFormat('%d/%m/%Y'));
+                	}
+
+
+                	
+
+                	var direccion = $("#txtDireccion").val();
+                	var detalle = $("#txtDetalle").val();
+                	var contacto = $("#txtContacto").val();
+                	var telefono = $("#txtTelefono").val();
+                	var email = $("#txtEmail").val();
+
+
+                	$.ajax({
+                		type: 'POST',
+                		url: '../procesos/trxSolicitudMensajeria.php',
+                		data: {"opcion":"insertar",
+       							cmbEmpresa:empresa,
+       							cmbPerimetro:perimetro,
+       							txtRazonSocial:razonSocial,
+       							dtpFecha:fecha,
+       							txtDireccion:direccion,
+       							txtDetalle:detalle,
+       							txtContacto:contacto,
+       							txtTelefono:telefono,
+       							txtEmail:email
+       					},
+	                	success: function (data) {
+	                		var respuesta = data;
+
+	                		if(respuesta){
+	                			swal("Correcto!", "Su solicitud ha sido enviada exitosamente!", "success")
+	                		}
+	                	}
+
+                	});
+                });
+            });
+
+
+
+        	function formattedDate(date) {
+			    var d = new Date(date || Date.now()),
+			        month = '' + (d.getMonth() + 1),
+			        day = '' + d.getDate(),
+			        year = d.getFullYear();
+
+			    if (month.length < 2) month = '0' + month;
+			    if (day.length < 2) day = '0' + day;
+
+			    return [month, day, year].join('/');
+			}
+        </script>
+	</head>
+	<body class="default">
+		<form id="datos" method="post" action="#">
+			<div>
+				<center>
+					<table>
+					    <tr><td align="center"><img src="../images/logo-orodelti.jpg" alt="Orodelti S.A."  width=178 height=120 /></td><tr>
+					    <tr><td align="center"><b>Solicitud de rutas de mensajeria</b></td></tr>
+					</table>
+				</center><br>
+			</div>
+			<div>
+				<center>
+					<table id="tblSolicitud">
+						<tr>
+							<td align="center">
+								<b>Empresa:</b>
+							</td>
+							<td>
+								<div id='cmbEmpresa' name="cmbPerimetro">
+	        					</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<b>Perimetro:</b>
+							</td>
+							<td>
+								<div id='cmbPerimetro' name="cmbPerimetro">
+	        					</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<b>Razon social:</b>
+							</td>
+							<td>
+								<input type="text" id="txtRazonSocial" name="txtRazonSocial"/>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<b>Escoger fecha</b>
+							</td>
+							<td>
+								<div id="rbSi">
+									Si
+								</div>
+								<div id="rbNo">
+									No
+								</div>
+							</td>	
+						</tr>
+						<tr>
+							<td>
+								<b>Fecha:</b>
+							</td>
+							<td>
+								<div id="dtpFecha">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<b>Direccion:</b>
+							</td>
+							<td>
+								<input type="text" id="txtDireccion" name="txtDireccion"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<b>Detalle:</b>
+							</td>
+							<td >
+								<textarea id="txtDetalle"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<b>Contacto:</b>
+							</td>
+							<td>
+								<input type="text" id="txtContacto" name="txtContacto"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<b>Telefono:</b>
+							</td>
+							<td>
+								<input type="text" id="txtTelefono" name="txtTelefono"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<b>Email:</b>
+							</td>
+							<td>
+								<input type="text" id="txtEmail" name="txtEmail" class="text-input" />
+							</td>
+						</tr>
+					</table>
+					<input type="button" name="btnAceptar" id="btnAceptar" value="Aceptar" />
+				</center>
+			</div>
+		</form>
+	</body>
+</html>
